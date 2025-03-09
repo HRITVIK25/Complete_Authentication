@@ -1,0 +1,44 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+
+# Build files
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.swp
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-workspace
+.DS_Store
+
+# Database files
+*.sqlite
+
+# Multer uploads (if storing locally)
+uploads/
+
+# MongoDB data dump
+*.dump
+
+# Next.js build files (if using Next.js)
+.next/
+
+# Vercel deployment files
+.vercel/
+
+# Docker files (if using Docker)
+.dockerignore
+docker-compose.override.yml
