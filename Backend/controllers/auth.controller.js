@@ -1,8 +1,9 @@
-import { User}  from "../models/user.model.js"
+import { User }  from "../models/user.model.js"
 import bcryptjs from "bcryptjs";
 import { generateTokenAndsetCookie  } from "../utils/generateTokenAndsetCookie.js"
 import {sendVerificationEmail,sendWelcomeEmail,sendPasswordResetEmail,sendResetSuccessEmail} from "../mailtrap/email.js"
 import crypto from "crypto";
+import { verifyToken } from "../middlewares/verifyToken.js"
 
 export const signup = async (req,res) => {
     const {name,email,password} = req.body;
@@ -100,7 +101,6 @@ export const login = async (req,res) => {
         if(!isPasswordValid){
             return res.status(400).json({status:false,message:"Invalid credentials"});
         };
-
         generateTokenAndsetCookie(res, user._id);
 
         user.lastLogin = new Date;
@@ -187,6 +187,27 @@ export const resetPassword = async (req,res) => {
         res.status(200).json({success:true, message: "Password reset successfully"});
     } catch (error) {
         console.log("error reset password: ",error);
+        return res.status(400).json({success:false, message: error.message});
+    }
+};
+
+export const checkAuth = async (req,res) => {
+    try {
+        const user = await User.findById(req.userId);
+        if(!user){
+            return res.status(400).json({success:false, message: "user not found"});
+        };
+
+        res.status(200).json({
+			success: true,
+			message: "Login successful",
+			user: {
+				...user._doc,
+				password: undefined,
+			},
+		});
+    } catch (error) {
+        console.log("error checking auth: ",error);
         return res.status(400).json({success:false, message: error.message});
     }
 }
