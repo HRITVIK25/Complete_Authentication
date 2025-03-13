@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
-import FloatingShape from "./components/FloatingShape";
 import { Navigate, Route, Routes } from "react-router-dom";
+
+import FloatingShape from "./components/FloatingShape";
+import LoadingSpinner from "./components/LoadingSpinner";
+
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import DashboardPage from "./pages/DashboardPage"
+
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore.js";
 
@@ -40,8 +44,8 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
-  console.log("isAuthenticated ", isAuthenticated);
-  console.log("user ", user);
+  if(isCheckingAuth) return <LoadingSpinner />
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center relative overflow-hidden">
       <FloatingShape

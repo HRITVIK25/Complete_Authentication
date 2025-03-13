@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = import.meta.env.MODE === "development" ? "http://localhost:4000/api/auth" : "/api/auth";
+const API_URL = import.meta.env.MODE === "development" ? `${import.meta.env.VITE_API_URL}` : "/api/auth";
 
 axios.defaults.withCredentials = true; // cookies sent with every response header
 
@@ -30,6 +30,17 @@ export const useAuthStore = create((set)=>({
             set({user:response.data.user, isAuthenticated:true, isLoading:false,error:null})
         } catch (error) {
             set({error:error.response.data.message || "Error logging in", isLoading:false})
+            throw error;
+        }
+    },
+
+    logout: async () => {
+        set({isLoading:true,error:null});
+        try {
+            await axios.post(`${API_URL}/logout`);
+            set({user:null, isAuthenticated:false,isLoading:false,error:null})
+        } catch (error) {
+            set({error:"Error logging out", isLoading:false})
             throw error;
         }
     },
