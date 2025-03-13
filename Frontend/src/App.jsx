@@ -115,6 +115,14 @@ function App() {
             </RedirectAuthenticated>
           }
         />
+        
+        {/* catch all other routes */}
+        <Route 
+          path="*"
+          element={
+            <Navigate to="/" replace />
+          }
+        />
       </Routes>
       <Toaster />
     </div>
