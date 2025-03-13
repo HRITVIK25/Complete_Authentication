@@ -9,9 +9,7 @@ const EmailVerificationPage = () => {
     const isLoading = false;
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
+
 
 
 	const handleChange = (index, value) => {
@@ -45,6 +43,12 @@ const EmailVerificationPage = () => {
 			inputRefs.current[index - 1].focus();
 		}
 	};
+
+	const handleSubmit = (e) => {
+        e.preventDefault();
+		const verificationCode = code.join("");
+		console.log(`Verification code submitted: ${verificationCode}`)
+    };
 
     	// Auto submit when all fields are filled
 	useEffect(() => {
