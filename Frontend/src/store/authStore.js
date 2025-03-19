@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API_URL =
   import.meta.env.MODE === "development"
-    ? "http://localhost:5173"
+    ? "http://localhost:4000"
     : "/api/auth";
 
 axios.defaults.withCredentials = true; // cookies sent with every response header
